@@ -1,12 +1,14 @@
 /**
  * Class object.
  */
-var Class = (function() {
+(function(global) {
+
+  "use strict";
 
   /**
    * Used to extend the supplied source object with a single object.
-   * @param (Object) source object to be extended.
-   * @param (Object) value used to extend the supplied source object.
+   * @param (Object) source - Object to be extended.
+   * @param (Object) value - Used to extend the supplied source object.
    */
 	var _extendOne = function(source, value) {
     if(source === undefined || value === undefined) return;
@@ -19,8 +21,8 @@ var Class = (function() {
     
   /**
    * Used to extend the supplied source object with either a single object or with an array of objects.
-   * @param (Object) source object to be extended.
-   * @param (Object[]|Object) value(s) used to extend the supplied source object.
+   * @param (Object) source - Object to be extended.
+   * @param (Object[]|Object) value - Used to extend the supplied source object.
    */
 	var __extend = function(source, value) {
     if(source === undefined || value === undefined) return;
@@ -38,7 +40,7 @@ var Class = (function() {
     
   /**
    * The constructor of the Class object.
-   * @param (object) [data] the optional object used to initialize a new instance of the class object.
+   * @param (object) data - The object used to initialize a new instance of the class object. Optional.
    */
   var constructor = function(data) {
     if(data !== undefined) {
@@ -59,5 +61,11 @@ var Class = (function() {
     }
   });
   
-  return constructor;
-}());
+  if("exports" in global) {
+    global.exports = constructor;
+  }
+  else {
+    global.Class = constructor;
+  }
+
+}(typeof window === "undefined" ? module : window));
